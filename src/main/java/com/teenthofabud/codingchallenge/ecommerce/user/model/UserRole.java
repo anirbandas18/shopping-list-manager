@@ -1,4 +1,4 @@
-package com.teenthofabud.codingchallenge.ecommerce.user;
+package com.teenthofabud.codingchallenge.ecommerce.user.model;
 
 import lombok.experimental.FieldNameConstants;
 

@@ -1,2 +1,2 @@
-insert into users (username, password_hash, roles, creation_time, created_by) values ('admin', '$2a$10$MqDZ7Rt.psiQAIYbBhmYjudRqSkuu6CCZKBZt3aNfljCH69avPu2S', 'ROLE_ADMIN,ROLE_USER', current_timestamp, 'system');
-insert into users (username, password_hash, roles, creation_time, created_by) values ('user', '$2a$10$xjyW95I1mvExE3bYHWuKiuhjXJV4Jws2jBEHV7y1h1DuTJjflj2fa', 'ROLE_USER', current_timestamp, 'system');
+insert into users (username, password_hash, roles, creation_time, created_by) values ('adas', '$2a$10$9uj1/JpNjlZyBO41pDxQ1exdp/STdLDyFRKA2AvZ9TP2RngHrwkA6', 'ROLE_ADMIN,ROLE_USER', current_timestamp, 'system');
+insert into users (username, password_hash, roles, creation_time, created_by) values ('user', '$2a$10$ySnOf0BW0Ct93pt/MaQ2WeV.QcfGH1WOtlLaWn.IYkdSFr0B.iIfu', 'ROLE_USER', current_timestamp, 'system');

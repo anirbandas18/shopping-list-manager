@@ -1,4 +1,4 @@
-package com.teenthofabud.codingchallenge.ecommerce.user;
+package com.teenthofabud.codingchallenge.ecommerce.user.model;
 
 import com.teenthofabud.codingchallenge.ecommerce.audit.Audit;
 import com.teenthofabud.codingchallenge.ecommerce.audit.AuditListener;

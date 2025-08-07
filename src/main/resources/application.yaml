@@ -24,3 +24,27 @@ spring:
                     time_zone: UTC
         open-in-view: false
         show-sql: true
+management:
+    endpoint:
+      health:
+        show-details: ALWAYS
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+                #include: health,metrics,prometheus
+    #otlp:
+    #    metrics:
+    #        export:
+    #            url: http://localhost:4318/v1/metrics
+    #            step: 10s
+    #    tracing:
+    #        endpoint: http://localhost:4318/v1/traces
+    tracing:
+        sampling:
+            probability: 1.0
+
+logging:
+    level:
+        org.hibernate.SQL: debug
+        org.hibernate.orm.jdbc.bind: trace

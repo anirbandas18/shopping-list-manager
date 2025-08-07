@@ -1,24 +1,31 @@
 package com.teenthofabud.codingchallenge.ecommerce.user.impl;
 
-import com.teenthofabud.codingchallenge.ecommerce.user.UserEntity;
+import com.teenthofabud.codingchallenge.ecommerce.user.UserEntity2DtoConverter;
 import com.teenthofabud.codingchallenge.ecommerce.user.UserRepository;
-import com.teenthofabud.codingchallenge.ecommerce.user.UserDto;
 import com.teenthofabud.codingchallenge.ecommerce.user.UserService;
+import io.micrometer.observation.annotation.Observed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Default implementation of UserService interface.
+ * This class provides methods to load user details by username.
+ */
 @Service
 @Slf4j
 public class DefaultUserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserEntity2DtoConverter userEntity2DtoConverter;
 
-    public DefaultUserServiceImpl(UserRepository userRepository) {
+    public DefaultUserServiceImpl(UserEntity2DtoConverter userEntity2DtoConverter, UserRepository userRepository) {
+        this.userEntity2DtoConverter = userEntity2DtoConverter;
         this.userRepository = userRepository;
     }
 
+    @Observed(name = "user.load-by-username", contextualName = "users.security")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("Loading user by username: {}", username);
@@ -27,32 +34,8 @@ public class DefaultUserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Username cannot be null or blank");
         }
         return userRepository.findByUsername(username)
-                .map(UserDto::new)
+                .map(userEntity2DtoConverter::convert)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
-    @Override
-    public UserEntity save(UserEntity userEntity) {
-        log.info("Saving user entity: {}", userEntity);
-        if (userEntity == null) {
-            log.warn("User entity is null");
-            throw new IllegalArgumentException("User entity cannot be null");
-        }
-        return userRepository.save(userEntity);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        log.info("Deleting user by ID: {}", id);
-        if (id == null) {
-            log.warn("ID is null");
-            throw new IllegalArgumentException("ID cannot be null");
-        }
-        if (!userRepository.existsById(id)) {
-            log.warn("User with ID {} does not exist", id);
-            throw new UsernameNotFoundException("User not found with ID: " + id);
-        }
-        userRepository.deleteById(id);
-        log.info("User with ID {} deleted successfully", id);
-    }
 }

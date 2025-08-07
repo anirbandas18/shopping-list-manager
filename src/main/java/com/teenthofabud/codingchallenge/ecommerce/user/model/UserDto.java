@@ -1,4 +1,4 @@
-package com.teenthofabud.codingchallenge.ecommerce.user;
+package com.teenthofabud.codingchallenge.ecommerce.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,8 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,20 +17,22 @@ import java.util.Collection;
 @Builder
 public class UserDto implements UserDetails {
 
-    private UserEntity userEntity;
+    private List<UserRole> roles;
+    private String username;
+    private String passwordHash;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(userEntity.getRoles().split(",")).map(SimpleGrantedAuthority::new).toList();
+        return roles.stream().map(UserRole::name).map(SimpleGrantedAuthority::new).toList();
     }
 
     @Override
     public String getPassword() {
-        return userEntity.getPasswordHash();
+        return passwordHash;
     }
 
     @Override
     public String getUsername() {
-        return userEntity.getUsername();
+        return username;
     }
 }
