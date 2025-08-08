@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping(path = "api/item")
+@RequestMapping(path = "/api/item")
 public class ItemController implements ItemAPI {
 
     private final ItemService itemService;

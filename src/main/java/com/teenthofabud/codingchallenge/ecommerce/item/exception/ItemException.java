@@ -11,7 +11,7 @@ public class ItemException extends Exception {
 
     public ItemException(String message, HttpStatus httpStatus) {
         super(message);
-        this.httpStatus = HttpStatus.NOT_FOUND;
+        this.httpStatus = httpStatus;
     }
 
 }

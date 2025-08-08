@@ -4,7 +4,6 @@ import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemException;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemForm;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemVo;
 import com.teenthofabud.codingchallenge.ecommerce.model.ErrorVo;
-import com.teenthofabud.codingchallenge.ecommerce.user.model.UserRole;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -16,7 +15,6 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

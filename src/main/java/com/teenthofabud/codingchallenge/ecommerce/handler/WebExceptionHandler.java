@@ -1,6 +1,9 @@
 package com.teenthofabud.codingchallenge.ecommerce.handler;
 
+import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemAlreadyExistsException;
 import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemException;
+import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemInvalidException;
+import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemNotFoundException;
 import com.teenthofabud.codingchallenge.ecommerce.model.ErrorVo;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +31,7 @@ public class WebExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(vo);
     }
 
-    @ExceptionHandler(ItemException.class)
+    @ExceptionHandler(value = {ItemAlreadyExistsException.class, ItemNotFoundException.class, ItemInvalidException.class })
     public ResponseEntity<ErrorVo> handle(ItemException e) {
         ErrorVo vo = ErrorVo.builder().code(e.getHttpStatus().name()).message(e.getMessage()).build();
         return ResponseEntity.status(e.getHttpStatus()).body(vo);
