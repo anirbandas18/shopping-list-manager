@@ -33,6 +33,14 @@ public class ItemController implements ItemAPI {
         this.itemService = itemService;
     }
 
+    /**
+     * Endpoint to add a new item.
+     * Only accessible by users with ADMIN role.
+     *
+     * @param itemForm the form containing item details
+     * @return ResponseEntity with status 201 Created and location of the new item
+     * @throws ItemException if there is an error while adding the item
+     */
     @RolesAllowed({
             UserRole.Fields.ROLE_ADMIN
     })
@@ -47,6 +55,14 @@ public class ItemController implements ItemAPI {
         return ResponseEntity.created(location).build();
     }
 
+    /**
+     * Endpoint to retrieve an item by its ID.
+     * Accessible by users with ADMIN or USER roles.
+     *
+     * @param id the ID of the item to retrieve
+     * @return ResponseEntity containing the ItemVo if found, or 404 Not Found if not found
+     * @throws ItemException if there is an error while retrieving the item
+     */
     @RolesAllowed({
             UserRole.Fields.ROLE_ADMIN,
             UserRole.Fields.ROLE_USER
@@ -61,6 +77,12 @@ public class ItemController implements ItemAPI {
         return ResponseEntity.ok(itemVo);
     }
 
+    /**
+     * Endpoint to retrieve all items.
+     * Accessible by users with ADMIN or USER roles.
+     *
+     * @return ResponseEntity containing a list of ItemVo objects, or 204 No Content if no items found
+     */
     @RolesAllowed({
             UserRole.Fields.ROLE_ADMIN,
             UserRole.Fields.ROLE_USER

@@ -31,7 +31,12 @@ import java.util.List;
 @RequestMapping(path = "/api/category")
 public class CategoryController implements CategoryAPI {
 
-
+    /**
+     * Retrieves all available categories.
+     * This endpoint is accessible to users with ADMIN or USER roles.
+     *
+     * @return ResponseEntity containing a list of CategoryVo objects representing the available categories
+     */
     @RolesAllowed({
             UserRole.Fields.ROLE_ADMIN,
             UserRole.Fields.ROLE_USER

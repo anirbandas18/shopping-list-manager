@@ -35,7 +35,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Tag(name = "ItemAPI", description = "Manage items")
 public interface ItemAPI {
 
-
     @Operation(method = "POST", summary = "Accept new item", description = "postItem")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Accepted new item"),
