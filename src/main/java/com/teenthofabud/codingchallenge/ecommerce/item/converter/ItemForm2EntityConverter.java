@@ -1,6 +1,6 @@
 package com.teenthofabud.codingchallenge.ecommerce.item.converter;
 
-import com.teenthofabud.codingchallenge.ecommerce.item.Category;
+import com.teenthofabud.codingchallenge.ecommerce.category.Category;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemEntity;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemForm;
 import org.springframework.core.convert.converter.Converter;

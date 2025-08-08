@@ -2,7 +2,7 @@ package com.teenthofabud.codingchallenge.ecommerce.item.model;
 
 import com.teenthofabud.codingchallenge.ecommerce.audit.Audit;
 import com.teenthofabud.codingchallenge.ecommerce.audit.AuditListener;
-import com.teenthofabud.codingchallenge.ecommerce.item.Category;
+import com.teenthofabud.codingchallenge.ecommerce.category.Category;
 import com.teenthofabud.codingchallenge.ecommerce.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

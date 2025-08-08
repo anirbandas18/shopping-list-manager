@@ -1,6 +1,8 @@
-package com.teenthofabud.codingchallenge.ecommerce.item;
+package com.teenthofabud.codingchallenge.ecommerce;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teenthofabud.codingchallenge.ecommerce.category.Category;
+import com.teenthofabud.codingchallenge.ecommerce.item.ItemRepository;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemEntity;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemForm;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemVo;

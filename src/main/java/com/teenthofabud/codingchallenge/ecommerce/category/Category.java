@@ -1,4 +1,4 @@
-package com.teenthofabud.codingchallenge.ecommerce.item;
+package com.teenthofabud.codingchallenge.ecommerce.category;
 
 public enum Category {
 
