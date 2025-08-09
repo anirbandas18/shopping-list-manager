@@ -14,6 +14,7 @@ public interface ItemService {
      *
      * @param itemForm the form containing item details
      * @return the ID of the newly added item
+     * @throws ItemAlreadyExistsException if an item with the same details already exists
      */
     public Long addItem(ItemForm itemForm) throws ItemAlreadyExistsException;
 
@@ -22,6 +23,8 @@ public interface ItemService {
      *
      * @param itemId the ID of the item to retrieve
      * @return the retrieved item entity
+     * @throws ItemInvalidException if the item is invalid
+     * @throws ItemNotFoundException if the item with the specified ID does not exist
      */
     ItemVo getItemById(Long itemId) throws ItemInvalidException, ItemNotFoundException;
 

@@ -1,15 +1,11 @@
-package com.teenthofabud.codingchallenge.ecommerce.user.model;
+package com.teenthofabud.codingchallenge.ecommerce.cart.model;
 
 import com.teenthofabud.codingchallenge.ecommerce.audit.Audit;
 import com.teenthofabud.codingchallenge.ecommerce.audit.AuditListener;
-import com.teenthofabud.codingchallenge.ecommerce.cart.model.ShoppingCartEntity;
 import com.teenthofabud.codingchallenge.ecommerce.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,13 +18,9 @@ import java.util.List;
 @org.hibernate.annotations.Cache(
         usage = CacheConcurrencyStrategy.READ_WRITE
 )
-@Entity(name = "UserEntity")
-@Table(name = "users",
-        indexes = {
-                @Index(columnList = "username", name = "idx_users_username")
-        }
-)
-public class UserEntity extends BaseEntity {
+@Entity(name = "CartItemEntity")
+@Table(name = "cart_item")
+public class CartItemEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,13 +30,13 @@ public class UserEntity extends BaseEntity {
     @Embedded
     private Audit audit;
 
-    @Column(nullable = false)
-    private String username;
+    @Column(name = "item_id", nullable = false)
+    private Long itemId;
 
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ShoppingCartEntity cart;
 
     @Column(nullable = false)
-    private String roles;
+    private Integer quantity;
 
 }

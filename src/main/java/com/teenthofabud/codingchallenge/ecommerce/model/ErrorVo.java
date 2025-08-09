@@ -14,12 +14,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ErrorVo {
 
-    @Schema(example = "brand is invalid", allowableValues = {"%s is invalid", "Unauthorized access", "No meeting found for %s", "%s is missing", "Service failure: %s"},
-            description = "if a specific attribute is causing the issue, the name of the attribute will be used in the message template. Otherwise the template placeholder will " +
+    @Schema(example = "value is invalid", description = "if a specific attribute is causing the issue, the name of the attribute will be used in the message template. Otherwise the template placeholder will " +
                     "be ignored")
     private String message;
 
-    @Schema(example = "ATTRIBUTE_EMPTY", allowableValues = {"ATTRIBUTE_EMPTY", "ATTRIBUTE_INVALID", "ACCESS_DENIED", "MEETING_INVALID", "MEETING_UNAVAILABLE", "ACTION_FAILURE"})
+    @Schema(example = "cart", description = "domain of the error, e.g. cart, item, order, etc.")
+    private String domain;
+
+    @Schema(example = "INVALID_VALUE", allowableValues = {"ATTRIBUTE_EMPTY", "ATTRIBUTE_INVALID", "ACCESS_DENIED", "MEETING_INVALID", "MEETING_UNAVAILABLE", "ACTION_FAILURE"})
     private String code;
 
 }

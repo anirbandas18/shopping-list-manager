@@ -13,6 +13,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ItemForm2EntityConverter implements Converter<ItemForm, ItemEntity> {
+
+    /**
+     * Converts a given ItemForm to an ItemEntity.
+     *
+     * @param source the ItemForm to convert
+     * @return an ItemEntity representation of the source form
+     */
     @Override
     public ItemEntity convert(ItemForm source) {
         return ItemEntity.builder()

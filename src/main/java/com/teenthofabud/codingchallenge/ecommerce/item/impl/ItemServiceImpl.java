@@ -22,13 +22,13 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class DefaultItemServiceImpl implements ItemService {
+public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
     private final ItemEntity2VoConverter itemEntity2VoConverter;
     private final ItemForm2EntityConverter itemForm2EntityConverter;
 
-    public DefaultItemServiceImpl(ItemRepository itemRepository, ItemEntity2VoConverter itemEntity2VoConverter, ItemForm2EntityConverter itemForm2EntityConverter) {
+    public ItemServiceImpl(ItemRepository itemRepository, ItemEntity2VoConverter itemEntity2VoConverter, ItemForm2EntityConverter itemForm2EntityConverter) {
         this.itemRepository = itemRepository;
         this.itemEntity2VoConverter = itemEntity2VoConverter;
         this.itemForm2EntityConverter = itemForm2EntityConverter;
@@ -44,6 +44,7 @@ public class DefaultItemServiceImpl implements ItemService {
         }
         ItemEntity itemEntity = itemForm2EntityConverter.convert(itemForm);
         assert itemEntity != null;
+        log.debug("Adding item entity: {}", itemEntity);
         ItemEntity savedItemEntity = itemRepository.save(itemEntity);
         log.info("Item added with ID: {}", savedItemEntity.getId());
         return savedItemEntity.getId();
@@ -52,12 +53,13 @@ public class DefaultItemServiceImpl implements ItemService {
     @Override
     public ItemVo getItemById(Long itemId) throws ItemInvalidException, ItemNotFoundException {
         log.info("Retrieving item with ID: {}", itemId);
-        if (itemId == null) {
-            log.warn("Item ID is null");
-            throw new ItemInvalidException("ID", "null");
+        if (itemId == null || itemId <= 0) {
+            log.warn("Item ID is invalid");
+            throw new ItemInvalidException("ID", itemId);
         }
         ItemEntity itemEntity = itemRepository.findById(itemId)
                 .orElseThrow(() -> new ItemNotFoundException("ID", itemId));
+        log.debug("Found item entity: {}", itemEntity);
         ItemVo itemVo = itemEntity2VoConverter.convert(itemEntity);
         log.info("Retrieved item: {}", itemVo);
         return itemVo;

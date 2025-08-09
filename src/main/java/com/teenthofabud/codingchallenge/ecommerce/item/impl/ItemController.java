@@ -64,8 +64,7 @@ public class ItemController implements ItemAPI {
      * @throws ItemException if there is an error while retrieving the item
      */
     @RolesAllowed({
-            UserRole.Fields.ROLE_ADMIN,
-            UserRole.Fields.ROLE_USER
+            UserRole.Fields.ROLE_ADMIN + UserRole.Fields.ROLE_USER
     })
     @Observed(name = "item.load-by-id", contextualName = "items.find-specifically")
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -84,8 +83,7 @@ public class ItemController implements ItemAPI {
      * @return ResponseEntity containing a list of ItemVo objects, or 204 No Content if no items found
      */
     @RolesAllowed({
-            UserRole.Fields.ROLE_ADMIN,
-            UserRole.Fields.ROLE_USER
+            UserRole.Fields.ROLE_ADMIN + UserRole.Fields.ROLE_USER
     })
     @Observed(name = "item.load-all-items", contextualName = "items.find-all")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

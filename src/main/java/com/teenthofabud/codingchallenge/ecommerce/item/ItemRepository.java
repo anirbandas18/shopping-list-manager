@@ -13,6 +13,12 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
 
+    /**
+     * Finds an ItemEntity by its name.
+     *
+     * @param name the name of the item
+     * @return an Optional containing the ItemEntity if found, or empty if not found
+     */
     Optional<ItemEntity> findByName(String name);
 
 }

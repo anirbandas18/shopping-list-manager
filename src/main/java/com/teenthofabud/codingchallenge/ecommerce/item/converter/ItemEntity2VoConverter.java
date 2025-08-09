@@ -12,6 +12,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ItemEntity2VoConverter implements Converter<ItemEntity, ItemVo> {
+
+    /**
+     * Converts a given ItemEntity to an ItemVo.
+     *
+     * @param source the ItemEntity to convert
+     * @return an ItemVo representation of the source entity
+     */
     @Override
     public ItemVo convert(ItemEntity source) {
         return ItemVo.builder()

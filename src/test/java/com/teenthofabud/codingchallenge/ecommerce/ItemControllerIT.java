@@ -157,8 +157,8 @@ class ItemControllerIT {
     }
 
     @Test
-    void testGetWithNonExistingIdOnFailureShouldReturnBadRequestAndInvalidValue() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get(ITEM_API_URI + "/{id}", -1)
+    void testGetWithNonExistingIdOnFailureShouldReturnNotFound() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get(ITEM_API_URI + "/{id}", Integer.MAX_VALUE)
                         .characterEncoding(Charset.defaultCharset())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isNotFound())
@@ -166,6 +166,19 @@ class ItemControllerIT {
 
         Assertions.assertNotNull(mvcResult);
         Assertions.assertEquals(HttpStatus.NOT_FOUND.name(), objectMapper.readValue(mvcResult.getResponse().getContentAsString(), ErrorVo.class).getCode());
+        Assertions.assertTrue(objectMapper.readValue(mvcResult.getResponse().getContentAsString(), ErrorVo.class).getMessage().contains("ID"));
+    }
+
+    @Test
+    void testGetWithNonExistingIdOnFailureShouldReturnBadRequestAndInvalidValue() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get(ITEM_API_URI + "/{id}", -1)
+                        .characterEncoding(Charset.defaultCharset())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isBadRequest())
+                .andReturn();
+
+        Assertions.assertNotNull(mvcResult);
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.name(), objectMapper.readValue(mvcResult.getResponse().getContentAsString(), ErrorVo.class).getCode());
         Assertions.assertTrue(objectMapper.readValue(mvcResult.getResponse().getContentAsString(), ErrorVo.class).getMessage().contains("ID"));
     }
 

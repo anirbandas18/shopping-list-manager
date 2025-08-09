@@ -33,7 +33,6 @@ class CategoryControllerIT {
         this.objectMapper = objectMapper;
     }
 
-
     @Test
     void testGetAllWithAvailabilityOnSuccessShouldReturnOkAndDetails() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get(CATEGORY_API_URI)

@@ -1,8 +1,7 @@
-package com.teenthofabud.codingchallenge.ecommerce.user.model;
+package com.teenthofabud.codingchallenge.ecommerce.cart.model;
 
 import com.teenthofabud.codingchallenge.ecommerce.audit.Audit;
 import com.teenthofabud.codingchallenge.ecommerce.audit.AuditListener;
-import com.teenthofabud.codingchallenge.ecommerce.cart.model.ShoppingCartEntity;
 import com.teenthofabud.codingchallenge.ecommerce.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,13 +21,9 @@ import java.util.List;
 @org.hibernate.annotations.Cache(
         usage = CacheConcurrencyStrategy.READ_WRITE
 )
-@Entity(name = "UserEntity")
-@Table(name = "users",
-        indexes = {
-                @Index(columnList = "username", name = "idx_users_username")
-        }
-)
-public class UserEntity extends BaseEntity {
+@Entity(name = "ShoppingCartEntity")
+@Table(name = "shopping_cart")
+public class ShoppingCartEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +36,23 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String username;
 
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "cart",
+            cascade = CascadeType.ALL, orphanRemoval = true
+    )
+    private List<CartItemEntity> cartItems = new ArrayList<>();
 
-    @Column(nullable = false)
-    private String roles;
+    public ShoppingCartEntity addItemToCart(CartItemEntity cartItem) {
+        cartItems.add(cartItem);
+        cartItem.setCart(this);
+        return this;
+    }
+
+    public ShoppingCartEntity removeItemFromCart(CartItemEntity cartItem) {
+        cartItems.remove(cartItem);
+        cartItem.setCart(null);
+        return this;
+    }
 
 }
