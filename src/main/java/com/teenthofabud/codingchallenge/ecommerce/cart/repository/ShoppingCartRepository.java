@@ -14,10 +14,10 @@ import java.util.List;
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCartEntity, Long> {
 
     /**
-     * Finds a list of ShoppingCartEntity objects by the username.
+     * Finds a list of ShoppingCartEntity by username.
      *
-     * @param userName the username associated with the shopping carts
-     * @return a list of ShoppingCartEntity objects
+     * @param userName the username of the user
+     * @return a list of ShoppingCartEntity associated with the given username
      */
     List<ShoppingCartEntity> findByUsername(String userName);
 }

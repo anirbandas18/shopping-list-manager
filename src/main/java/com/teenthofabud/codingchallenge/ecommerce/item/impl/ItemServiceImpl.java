@@ -72,7 +72,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemVo> getItems() {
         log.info("Retrieving all items");
-        List<ItemProjection> itemProjections = itemRepository.findAllProjectedBy(ItemProjection.class);
+        List<ItemProjection> itemProjections = itemRepository.findBy(ItemProjection.class);
         if (itemProjections.isEmpty()) {
             log.warn("No items found");
             return List.of(); // Return an empty list if no items are found

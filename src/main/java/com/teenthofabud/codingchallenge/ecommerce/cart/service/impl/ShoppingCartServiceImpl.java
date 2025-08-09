@@ -2,6 +2,7 @@ package com.teenthofabud.codingchallenge.ecommerce.cart.service.impl;
 
 import com.teenthofabud.codingchallenge.ecommerce.cart.converter.ShoppingCartEntity2VoConverter;
 import com.teenthofabud.codingchallenge.ecommerce.cart.exception.*;
+import com.teenthofabud.codingchallenge.ecommerce.cart.model.CartItemEntity;
 import com.teenthofabud.codingchallenge.ecommerce.cart.model.ShoppingCartDto;
 import com.teenthofabud.codingchallenge.ecommerce.cart.model.ShoppingCartEntity;
 import com.teenthofabud.codingchallenge.ecommerce.cart.model.ShoppingCartVo;
@@ -117,12 +118,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void clearShoppingCart(ShoppingCartDto dto) throws CartInvalidException, CartNotFoundException, CartMismatchException, CartInconsistentException {
         validateUserExists(dto.username());
         ShoppingCartEntity shoppingCartEntity = validateCart(dto);
-        List<ShoppingCartEntity> shoppingCartEntities = shoppingCartRepository.findByUsername(dto.username());
-        if(shoppingCartEntities.isEmpty()) {
+        List<CartItemEntity> cartItemEntities = shoppingCartEntity.getCartItems();
+        if(cartItemEntities.isEmpty()) {
             log.error("User {} has no items in shopping cart with ID: {}", dto.username(), dto.id());
             throw new CartInconsistentException("shopping", "content", "empty");
         }
         log.info("Clearing shopping cart with ID: {} for user: {}", dto.id(), dto.username());
+        //cartItemEntities.forEach(e -> e.setCart(null));
         shoppingCartEntity.setCartItems(null);
         shoppingCartRepository.save(shoppingCartEntity);
         log.info("Shopping cart with ID: {} cleared for user: {}", dto.id(), dto.username());

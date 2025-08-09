@@ -106,13 +106,12 @@ public interface ShoppingCartAPI {
     })
     public ResponseEntity<ShoppingCartVo> getCartById(Authentication authentication, Long id) throws CartException;
 
-    @Operation(method = "GET", summary = "Get all carts", description = "getCarts")
+    @Operation(method = "GET", summary = "Get all carts of the user", description = "getCarts")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved all carts",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = ShoppingCartVo.class)))),
             @ApiResponse(responseCode = "204", description = "No carts found")
     })
     public ResponseEntity<List<ShoppingCartVo>> getCarts(Authentication authentication) throws CartInvalidException;
-
 
 }

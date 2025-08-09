@@ -7,6 +7,6 @@ import org.springframework.http.HttpStatus;
 public class CartInconsistentException extends CartException {
 
     public CartInconsistentException(String context, String key, Object value) {
-        super("Cart " + context + " with " + key + ": " + value + " is already empty", HttpStatus.PRECONDITION_FAILED);
+        super("Cart " + context + " with " + key + ": " + value + " is already achieved", HttpStatus.PRECONDITION_FAILED);
     }
 }

@@ -1,7 +1,6 @@
 package com.teenthofabud.codingchallenge.ecommerce.item;
 
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemEntity;
-import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,11 +23,11 @@ public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
     Optional<ItemEntity> findByName(String name);
 
     /**
-     * Finds all ItemProjection objects.
-     * This method retrieves all items as projections, which are lightweight representations of the item data.
+     * Finds an ItemProjection by its ID.
      *
-     * @return a list of ItemProjection objects
+     * @param type projection type of the item
+     * @return an Optional containing the ItemProjection if found, or empty if not found
      */
-    <T> List<T> findAllProjectedBy(Class<T> type);
+    <T> List<T> findBy(Class<T> type);
 
 }
