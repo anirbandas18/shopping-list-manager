@@ -1,9 +1,6 @@
 package com.teenthofabud.codingchallenge.ecommerce.cart.service;
 
-import com.teenthofabud.codingchallenge.ecommerce.cart.exception.CartAbusedException;
-import com.teenthofabud.codingchallenge.ecommerce.cart.exception.CartInvalidException;
-import com.teenthofabud.codingchallenge.ecommerce.cart.exception.CartMismatchException;
-import com.teenthofabud.codingchallenge.ecommerce.cart.exception.CartNotFoundException;
+import com.teenthofabud.codingchallenge.ecommerce.cart.exception.*;
 import com.teenthofabud.codingchallenge.ecommerce.cart.model.ShoppingCartDto;
 import com.teenthofabud.codingchallenge.ecommerce.cart.model.ShoppingCartVo;
 import org.springframework.stereotype.Service;
@@ -64,7 +61,7 @@ public interface ShoppingCartService {
      * @throws CartNotFoundException if the shopping cart is not found
      * @throws CartMismatchException if the shopping cart does not belong to the user
      */
-    public void clearShoppingCart(ShoppingCartDto dto) throws CartInvalidException, CartNotFoundException, CartMismatchException;
+    public void clearShoppingCart(ShoppingCartDto dto) throws CartInvalidException, CartNotFoundException, CartMismatchException, CartInconsistentException;
 
 /*
     */

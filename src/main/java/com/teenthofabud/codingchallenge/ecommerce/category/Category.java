@@ -2,6 +2,8 @@ package com.teenthofabud.codingchallenge.ecommerce.category;
 
 public enum Category {
 
+    // total = 25
+
     BEVERAGE,
     VEGETABLES,
     BAKERY,
@@ -25,6 +27,7 @@ public enum Category {
     INTERNATIONAL,
     SEASONAL,
     SPECIALTY,
-    LOCAL;
+    LOCAL,
+    ALCOHOLIC;
 
 }

@@ -44,14 +44,32 @@ public class ShoppingCartController implements ShoppingCartAPI {
         return ResponseEntity.created(location).build();
     }
 
+    @RolesAllowed({
+            UserRole.Fields.ROLE_ADMIN + UserRole.Fields.ROLE_USER
+    })
+    @Observed(name = "shopping-cart.remove-by-id-for-user", contextualName = "shopping-carts.delete-specifically")
+    @DeleteMapping(value = "{id}")
     @Override
-    public ResponseEntity<Void> deleteCart(Authentication authentication, Long id) throws CartException {
-        return null;
+    public ResponseEntity<Void> deleteCart(Authentication authentication, @PathVariable Long id) throws CartException {
+        log.debug("Received request to delete shopping cart by id: {} for user: {}", id, authentication.getName());
+        ShoppingCartDto dto = ShoppingCartDto.builder().id(id).username(authentication.getName()).build();
+        shoppingCartService.deleteShoppingCart(dto);
+        log.info("Shopping cart with ID: {} deleted successfully", id);
+        return ResponseEntity.noContent().build();
     }
 
+    @RolesAllowed({
+            UserRole.Fields.ROLE_ADMIN + UserRole.Fields.ROLE_USER
+    })
+    @Observed(name = "shopping-cart.reset-by-id-for-user", contextualName = "shopping-carts.clear-specifically")
+    @PutMapping(value = "{id}")
     @Override
-    public ResponseEntity<Void> putCart(Authentication authentication, Long id) throws CartException {
-        return null;
+    public ResponseEntity<Void> putCart(Authentication authentication, @PathVariable Long id) throws CartException {
+        log.debug("Received request to clear shopping cart by id: {} for user: {}", id, authentication.getName());
+        ShoppingCartDto dto = ShoppingCartDto.builder().id(id).username(authentication.getName()).build();
+        shoppingCartService.clearShoppingCart(dto);
+        log.info("Shopping cart with ID: {} has been cleared successfully", id);
+        return ResponseEntity.noContent().build();
     }
 
     @RolesAllowed({

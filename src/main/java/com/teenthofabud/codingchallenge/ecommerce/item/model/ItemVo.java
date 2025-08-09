@@ -7,6 +7,6 @@ import lombok.*;
  * This record encapsulates the details of an item, including its category, name, description, and price.
  */
 @Builder
-public record ItemVo(String category, String name, String description, Double price) {
+public record ItemVo(Long id, String category, String name, String description, Double price) {
 
 }

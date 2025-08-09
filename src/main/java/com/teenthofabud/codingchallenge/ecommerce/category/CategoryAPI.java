@@ -1,6 +1,5 @@
 package com.teenthofabud.codingchallenge.ecommerce.category;
 
-import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemVo;
 import com.teenthofabud.codingchallenge.ecommerce.model.ErrorVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

@@ -1,9 +1,11 @@
 package com.teenthofabud.codingchallenge.ecommerce.item;
 
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemEntity;
+import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,5 +22,13 @@ public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
      * @return an Optional containing the ItemEntity if found, or empty if not found
      */
     Optional<ItemEntity> findByName(String name);
+
+    /**
+     * Finds all ItemProjection objects.
+     * This method retrieves all items as projections, which are lightweight representations of the item data.
+     *
+     * @return a list of ItemProjection objects
+     */
+    <T> List<T> findAllProjectedBy(Class<T> type);
 
 }

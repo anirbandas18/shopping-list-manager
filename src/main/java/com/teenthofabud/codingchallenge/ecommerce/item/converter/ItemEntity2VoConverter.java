@@ -1,7 +1,7 @@
 package com.teenthofabud.codingchallenge.ecommerce.item.converter;
 
-import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemEntity;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemVo;
+import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemEntity;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +22,7 @@ public class ItemEntity2VoConverter implements Converter<ItemEntity, ItemVo> {
     @Override
     public ItemVo convert(ItemEntity source) {
         return ItemVo.builder()
+                .id(source.getId())
                 .category(source.getCategory().name())
                 .price(source.getPrice())
                 .description(source.getDescription())

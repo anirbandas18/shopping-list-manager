@@ -3,22 +3,14 @@ package com.teenthofabud.codingchallenge.ecommerce.category.impl;
 import com.teenthofabud.codingchallenge.ecommerce.category.Category;
 import com.teenthofabud.codingchallenge.ecommerce.category.CategoryAPI;
 import com.teenthofabud.codingchallenge.ecommerce.category.CategoryVo;
-import com.teenthofabud.codingchallenge.ecommerce.item.ItemAPI;
-import com.teenthofabud.codingchallenge.ecommerce.item.ItemService;
-import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemException;
-import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemForm;
-import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemVo;
 import com.teenthofabud.codingchallenge.ecommerce.user.model.UserRole;
 import io.micrometer.observation.annotation.Observed;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 

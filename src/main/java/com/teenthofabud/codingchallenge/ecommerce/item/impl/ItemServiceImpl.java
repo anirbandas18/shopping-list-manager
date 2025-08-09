@@ -1,15 +1,17 @@
 package com.teenthofabud.codingchallenge.ecommerce.item.impl;
 
 import com.teenthofabud.codingchallenge.ecommerce.item.converter.ItemForm2EntityConverter;
+import com.teenthofabud.codingchallenge.ecommerce.item.converter.ItemProjection2VoConverter;
 import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemAlreadyExistsException;
 import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemInvalidException;
 import com.teenthofabud.codingchallenge.ecommerce.item.exception.ItemNotFoundException;
+import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemProjection;
+import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemVo;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemEntity;
 import com.teenthofabud.codingchallenge.ecommerce.item.ItemRepository;
 import com.teenthofabud.codingchallenge.ecommerce.item.ItemService;
 import com.teenthofabud.codingchallenge.ecommerce.item.converter.ItemEntity2VoConverter;
 import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemForm;
-import com.teenthofabud.codingchallenge.ecommerce.item.model.ItemVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +29,13 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final ItemEntity2VoConverter itemEntity2VoConverter;
     private final ItemForm2EntityConverter itemForm2EntityConverter;
+    private final ItemProjection2VoConverter itemProjection2VoConverter;
 
-    public ItemServiceImpl(ItemRepository itemRepository, ItemEntity2VoConverter itemEntity2VoConverter, ItemForm2EntityConverter itemForm2EntityConverter) {
+    public ItemServiceImpl(ItemRepository itemRepository, ItemEntity2VoConverter itemEntity2VoConverter, ItemForm2EntityConverter itemForm2EntityConverter, ItemProjection2VoConverter itemProjection2VoConverter) {
         this.itemRepository = itemRepository;
         this.itemEntity2VoConverter = itemEntity2VoConverter;
         this.itemForm2EntityConverter = itemForm2EntityConverter;
+        this.itemProjection2VoConverter = itemProjection2VoConverter;
     }
 
     @Override
@@ -68,12 +72,12 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemVo> getItems() {
         log.info("Retrieving all items");
-        List<ItemEntity> itemEntities = itemRepository.findAll();
-        if (itemEntities.isEmpty()) {
+        List<ItemProjection> itemProjections = itemRepository.findAllProjectedBy(ItemProjection.class);
+        if (itemProjections.isEmpty()) {
             log.warn("No items found");
             return List.of(); // Return an empty list if no items are found
         }
-        List<ItemVo> itemVoList = itemEntities.stream().map(itemEntity2VoConverter::convert).toList();
+        List<ItemVo> itemVoList = itemProjections.stream().map(itemProjection2VoConverter::convert).toList();
         log.info("Retrieved {} items", itemVoList.size());
         return itemVoList;
     }

@@ -45,7 +45,7 @@ public class WebExceptionHandler {
         return ResponseEntity.status(e.getHttpStatus()).body(vo);
     }
 
-    @ExceptionHandler(value = { CartAlreadyExistsException.class, CartNotFoundException.class, CartInvalidException.class, CartAbusedException.class, CartMismatchException.class })
+    @ExceptionHandler(value = { CartAlreadyExistsException.class, CartNotFoundException.class, CartInvalidException.class, CartAbusedException.class, CartMismatchException.class, CartInconsistentException.class })
     public ResponseEntity<ErrorVo> handle(CartException e) {
         ErrorVo vo = ErrorVo.builder().domain("Cart").code(e.getHttpStatus().name()).message(e.getMessage()).build();
         return ResponseEntity.status(e.getHttpStatus()).body(vo);
