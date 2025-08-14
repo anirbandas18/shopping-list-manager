@@ -1,0 +1,19 @@
+alertmanager:
+  enabled: false
+kube-state-metrics:
+  enabled: false
+prometheus-node-exporter:
+  enabled: false
+prometheus-pushgateway:
+  enabled: false
+server:
+  global:
+    scrape_interval: 15s
+serverFiles:
+  prometheus.yml:
+    scrape_configs:
+      - job_name: shopping-list-manager
+        metrics_path: /actuator/prometheus
+        static_configs:
+          - targets:
+            - shopping-list-manager.aleph-alpha.svc.cluster.local:8081

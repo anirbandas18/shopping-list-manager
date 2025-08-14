@@ -1,0 +1,84 @@
+server:
+    port: 8081
+spring:
+    application:
+        name: '@project.artifactId@'
+        version: '@project.version@'
+    datasource:
+        generate-unique-name: false
+        name: shopping-list-manager
+        password: sa
+    h2:
+        console:
+            enabled: true
+            settings:
+                web-allow-others: true
+    jackson:
+        default-property-inclusion: non_null
+        deserialization:
+            fail-on-unknown-properties: false
+    jpa:
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                jdbc:
+                    time_zone: UTC
+        open-in-view: false
+        show-sql: true
+
+management:
+    metrics:
+        tags:
+            enabled: true
+            application: '@project.artifactId@'
+        distribution:
+            percentiles-histogram:
+                all: true
+        enable:
+            all: true
+    health:
+        livenessState:
+            enabled: true
+        readinessState:
+            enabled: true
+    endpoint:
+        health:
+            probes:
+                add-additional-paths: true
+                enabled: true
+            show-details: ALWAYS
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+    zipkin:
+        tracing:
+            export:
+                enabled: true
+    prometheus:
+      metrics:
+        export:
+          enabled: true
+          step: 5s
+    tracing:
+        enabled: true
+        sampling:
+            probability: 1
+
+logging:
+    level:
+        org.hibernate.SQL: debug
+        org.hibernate.orm.jdbc.bind: trace
+    pattern:
+        correlation: '[${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+    include-application-name: false
+
+shoppingListManager:
+    cart:
+        creation:
+            rateLimitPerUser: 5
+    recommender:
+        maxItems: 5
+        autocomplete:
+            maxCharacters: 3

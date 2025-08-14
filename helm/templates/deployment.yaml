@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "shopping-list-manager-helm.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "shopping-list-manager-helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "shopping-list-manager-helm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "shopping-list-manager-helm.labels" . | nindent 8 }}
+        tier: backend
+      namespace: {{ .Release.Namespace }}
+    spec:
+      replicas: {{ .Values.replicaCount | default 1 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "shopping-list-manager-helm.fullname" . }}
+        - name: secret
+          secret:
+            secretName: {{ include "shopping-list-manager-helm.fullname" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: config
+              readOnly: true
+              mountPath: /config
+            - name: secret
+              readOnly: true
+              mountPath: /secrets
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: '-XX:+UseContainerSupport -XX:MaxRAMPercentage=80'
+            - name: PROJECT_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APPLICATION_NAME
+              value: {{ default .Chart.Name .Values.name }}
+            - name: SPRING_CONFIG_ADDITIONAL_LOCATION
+              value: /config/config.yaml,/secrets/secret.yaml
+
+
+

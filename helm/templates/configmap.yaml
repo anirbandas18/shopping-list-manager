@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "shopping-list-manager-helm.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+data:
+  config.yaml: |-
+    server:
+      port: 8081
+    logging:
+      level:
+        org.hibernate.SQL: info
+        org.hibernate.orm.jdbc.bind: info
+    management:
+      zipkin:
+        tracing:
+          endpoint: http://zipkin.toab-infrastructure.svc.cluster.local:9411/api/v2/spans
+    shoppingListManager:
+      recommender:
+        autocomplete:
+          maxCharacters: {{ .Values.config.shoppingListManager.recommender.autocomplete.maxCharacters }}

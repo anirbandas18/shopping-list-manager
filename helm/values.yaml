@@ -1,0 +1,45 @@
+replicaCount: 1
+
+image:
+  repository: teenthofabud/shopping-list-manager
+  pullPolicy: IfNotPresent
+  tag: 0.0.1-SNAPSHOT
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: shopping-list-manager
+
+ingress:
+  enabled: false
+
+service:
+  type: NodePort
+  port: 8081
+
+resources: {}
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: http
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: http
+  initialDelaySeconds: 20
+  periodSeconds: 10
+
+
+nodeSelector: {}
+
+affinity: {}
+
+config:
+  shoppingListManager:
+    recommender:
+      autocomplete:
+        maxCharacters: 3
+
+secret:
+  openai:
+    apiKey: ""

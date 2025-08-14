@@ -1,0 +1,25 @@
+# first line should be comment to make helm linting happy
+server:
+  port: 8081
+
+logging:
+  level:
+    org.hibernate.SQL: info
+    org.hibernate.orm.jdbc.bind: info
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+
+shoppingListManager:
+  recommender:
+    autocomplete:
+      maxCharacters: 3
