@@ -1,7 +1,7 @@
 ## Deploy application to Kubernetes cluster using Helm
 
 ## Shopping List Manager application
-helm upgrade --install --create-namespace --namespace aleph-alpha --debug --set secret.openai.apiKey=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 shopping-list-manager helm && \
+helm upgrade --install --create-namespace --namespace aleph-alpha --debug --set secret.openai.apiKey=your-openai-apiKey shopping-list-manager helm && \
 
 ## Zipkin traces tool
 helm upgrade --install --create-namespace --namespace toab-infrastructure --debug -f values/k8s/zipkin-config.yaml zipkin openzipkin/zipkin && \
