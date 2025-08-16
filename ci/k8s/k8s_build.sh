@@ -11,5 +11,6 @@ helm template openzipkin/zipkin --name-template zipkin --namespace toab-infrastr
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && \
 helm template prometheus-community/prometheus --name-template prometheus --namespace toab-infrastructure --release-name -f values/k8s/prometheus-config.yaml  --output-dir out --debug && \
 helm repo add grafana https://grafana.github.io/helm-charts && \
-helm template grafana/grafana --name-template grafana --namespace toab-infrastructure --release-name -f values/k8s/grafana-config.yaml  --output-dir out --debug && \
+helm template grafana/grafana --name-template grafana --namespace toab-infrastructure --release-name -f values/k8s/grafana-config.yaml --output-dir out --debug && \
+helm template grafana/loki --name-template loki --namespace toab-infrastructure --release-name -f values/k8s/loki-config.yaml --output-dir out --debug && \
 helm repo update

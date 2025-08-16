@@ -9,6 +9,9 @@ helm upgrade --install --create-namespace --namespace toab-infrastructure --debu
 ## Prometheus metrics tool
 helm upgrade --install --create-namespace --namespace toab-infrastructure --debug -f values/k8s/prometheus-config.yaml prometheus prometheus-community/prometheus && \
 
+## Loki logging tool
+helm upgrade --install --create-namespace --namespace toab-infrastructure --debug --values values/k8s/loki-config.yaml loki grafana/loki && \
+
 ## Grafana observability tool
 helm upgrade --install --create-namespace --namespace toab-infrastructure --debug -f values/k8s/grafana-config.yaml grafana grafana/grafana && \
 kubectl get secret --namespace toab-infrastructure grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo " is your Grafana admin password" && \
