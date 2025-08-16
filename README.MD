@@ -102,6 +102,7 @@ This is intended for local development and testing purposes only.
 * To access grafana after having deployed it you can execute the command ``minikube service grafana --namespace toab-infrastructure --url`` in the same terminal
 * You will see the new URL to access the application on the console in the format http://127.0.0.1:TUNNEL_PORT where the web UI of grafana is available
 * To exit grafana and stop the tunneling, press `Ctrl+C` in the same terminal
+* Start Loki `loki -config.file=values/native/loki-local-config.yaml`
 
 ### Functional
 

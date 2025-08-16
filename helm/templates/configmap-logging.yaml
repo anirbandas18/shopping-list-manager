@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "shopping-list-manager-helm.fullname" . }}-logging-logback
+  namespace: {{ .Release.Namespace }}
+data:
+  logback-spring.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <springProperty scope="context" name="appName" source="spring.application.name" />
+    <springProperty scope="context" name="orgName" source="spring.application.org" />
+    
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+    <labels>
+    agent = loki4j
+    org = ${orgName}
+    application = ${appName}
+    host = ${HOSTNAME}
+    level = %level
+    </labels>
+    <structuredMetadata>off</structuredMetadata>
+    <message>
+    <pattern>${FILE_LOG_PATTERN}</pattern>
+    </message>
+    <http>
+    <url>http://{{ .Values.config.loki.endpoint }}:3100/loki/api/v1/push</url>
+    <requestTimeoutMs>10000</requestTimeoutMs>
+    </http>
+    <batch>
+    <maxItems>1</maxItems>
+    <timeoutMs>10000</timeoutMs>
+    </batch>
+    <verbose>true</verbose>
+    </appender>
+    
+    <root level="INFO">
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="LOKI" />
+    </root>
+    </configuration>

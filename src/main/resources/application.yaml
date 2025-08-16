@@ -4,6 +4,7 @@ spring:
     application:
         name: '@project.artifactId@'
         version: '@project.version@'
+        org: &org teenthofabud
     datasource:
         generate-unique-name: false
         name: shopping-list-manager
@@ -28,10 +29,15 @@ spring:
         show-sql: true
 
 management:
+    observations:
+        key-values:
+            org: *org
     metrics:
         tags:
             enabled: true
-            application: '@project.artifactId@'
+            application: '{spring.application.name}'
+            profiles: '{spring.profiles.active}'
+            org: *org
         distribution:
             percentiles-histogram:
                 all: true

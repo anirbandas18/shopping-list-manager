@@ -24,6 +24,9 @@ spec:
         - name: secret
           secret:
             secretName: {{ include "shopping-list-manager-helm.fullname" . }}
+        - name: logging-config
+          configMap:
+            name: {{ include "shopping-list-manager-helm.fullname" . }}-logging-logback
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
@@ -51,6 +54,9 @@ spec:
             - name: secret
               readOnly: true
               mountPath: /secrets
+            - name: logging-config
+              readOnly: true
+              mountPath: /logging-config
           env:
             - name: JAVA_TOOL_OPTIONS
               value: '-XX:+UseContainerSupport -XX:MaxRAMPercentage=80'
@@ -60,8 +66,9 @@ spec:
                   fieldPath: metadata.namespace
             - name: APPLICATION_NAME
               value: {{ default .Chart.Name .Values.name }}
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.config.profile }}
             - name: SPRING_CONFIG_ADDITIONAL_LOCATION
-              value: /config/config.yaml,/secrets/secret.yaml
-
-
-
+              value: /config/application-{{ .Values.config.profile }}.yaml,/secrets/secret.yaml
+            - name: LOGGING_CONFIG
+              value: /logging-config/logback-spring.xml

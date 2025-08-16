@@ -35,10 +35,13 @@ nodeSelector: {}
 affinity: {}
 
 config:
+  profile: dev
   shoppingListManager:
     recommender:
       autocomplete:
         maxCharacters: 3
+  loki:
+    endpoint: loki.toab-infrastructure.svc.cluster.local
 
 secret:
   openai:
