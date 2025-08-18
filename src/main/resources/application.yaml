@@ -27,6 +27,10 @@ spring:
                     time_zone: UTC
         open-in-view: false
         show-sql: true
+    ai:
+        openai:
+            metadata:
+                rate-limit-metrics-enabled: true
 
 management:
     observations:

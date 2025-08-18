@@ -1,11 +1,13 @@
 package com.teenthofabud.codingchallenge.ecommerce.recommender.impl;
 
+import com.teenthofabud.codingchallenge.ecommerce.exception.ShoppingListManagerSystemException;
 import com.teenthofabud.codingchallenge.ecommerce.recommender.RecommenderDAO;
 import com.teenthofabud.codingchallenge.ecommerce.recommender.exception.RecommenderInvalidException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.converter.ListOutputConverter;
+import org.springframework.ai.retry.NonTransientAiException;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.stereotype.Component;
 
@@ -35,12 +37,17 @@ public class AIRecommenderDAOImpl implements RecommenderDAO {
         }
         String itemsAsStr = String.join(",", items);
         log.info("Calling chat client to provide recipe ideas for items: {}", itemsAsStr);
-        return this.chatClient.prompt()
+        try {
+            return this.chatClient.prompt()
                 .advisors(new SimpleLoggerAdvisor())
                 .system(sp -> sp.params(Map.of( "objective", "recipes", "items", itemsAsStr)))
                 .user(PROVIDE_RECIPES_PROMPT)
                 .call()
                 .entity(new ListOutputConverter(new DefaultConversionService()));
+        } catch (NonTransientAiException e) {
+            log.error("Unable to call LLM via AI provider for providing recipes ", e);
+            throw new ShoppingListManagerSystemException("Failed to call LLM via AI provider");
+        }
     }
 
     @Override
@@ -52,12 +59,17 @@ public class AIRecommenderDAOImpl implements RecommenderDAO {
         }
         String itemsAsStr = String.join(",", items);
         log.info("Calling chat client to suggest complementary items for items: {}", itemsAsStr);
-        return this.chatClient.prompt()
-                .advisors(new SimpleLoggerAdvisor())
-                .system(sp -> sp.params(Map.of( "objective", "complementary items", "items", itemsAsStr)))
-                .user(SUGGEST_COMPLEMENTARY_ITEMS_PROMPT)
-                .call()
-                .entity(new ListOutputConverter(new DefaultConversionService()));
+        try {
+            return this.chatClient.prompt()
+                    .advisors(new SimpleLoggerAdvisor())
+                    .system(sp -> sp.params(Map.of( "objective", "complementary items", "items", itemsAsStr)))
+                    .user(SUGGEST_COMPLEMENTARY_ITEMS_PROMPT)
+                    .call()
+                    .entity(new ListOutputConverter(new DefaultConversionService()));
+        } catch (NonTransientAiException e) {
+            log.error("Unable to call LLM via AI provider for suggesting complementary items ", e);
+            throw new ShoppingListManagerSystemException("Failed to call LLM via AI provider");
+        }
     }
 
     @Override
@@ -69,11 +81,16 @@ public class AIRecommenderDAOImpl implements RecommenderDAO {
         }
         String itemsAsStr = String.join(",", items);
         log.info("Calling chat client to suggest alternative items for items: {}", itemsAsStr);
-        return this.chatClient.prompt()
-                .advisors(new SimpleLoggerAdvisor())
-                .system(sp -> sp.params(Map.of( "objective", "alternative items", "items", itemsAsStr)))
-                .user(SUGGEST_ALTERNATIVE_ITEMS_PROMPT)
-                .call()
-                .entity(new ListOutputConverter(new DefaultConversionService()));
+        try {
+            return this.chatClient.prompt()
+                    .advisors(new SimpleLoggerAdvisor())
+                    .system(sp -> sp.params(Map.of( "objective", "alternative items", "items", itemsAsStr)))
+                    .user(SUGGEST_ALTERNATIVE_ITEMS_PROMPT)
+                    .call()
+                    .entity(new ListOutputConverter(new DefaultConversionService()));
+        } catch (NonTransientAiException e) {
+            log.error("Unable to call LLM via AI provider for suggesting alternative items ", e);
+            throw new ShoppingListManagerSystemException("Failed to call LLM via AI provider");
+        }
     }
 }

@@ -42,6 +42,7 @@ config:
         maxCharacters: 3
   loki:
     endpoint: loki.toab-infrastructure.svc.cluster.local
+    batchItemsSize: 100
 
 secret:
   openai:

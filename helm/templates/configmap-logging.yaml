@@ -28,7 +28,7 @@ data:
     <requestTimeoutMs>10000</requestTimeoutMs>
     </http>
     <batch>
-    <maxItems>1</maxItems>
+    <maxItems>{{ .Values.config.loki.batchItemsSize }}</maxItems>
     <timeoutMs>10000</timeoutMs>
     </batch>
     <verbose>true</verbose>
